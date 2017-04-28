@@ -1,0 +1,9 @@
+..\obj\system_stm32f0xx.o: ..\SYS\system_stm32f0xx.c
+..\obj\system_stm32f0xx.o: ..\SYS\stm32f0xx.h
+..\obj\system_stm32f0xx.o: ..\SYS\stm32f030x8.h
+..\obj\system_stm32f0xx.o: ..\SYS\core_cm0.h
+..\obj\system_stm32f0xx.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\system_stm32f0xx.o: ..\SYS\core_cmInstr.h
+..\obj\system_stm32f0xx.o: ..\SYS\cmsis_armcc.h
+..\obj\system_stm32f0xx.o: ..\SYS\core_cmFunc.h
+..\obj\system_stm32f0xx.o: ..\SYS\system_stm32f0xx.h
