@@ -563,6 +563,11 @@
               <FileType>1</FileType>
               <FilePath>..\Hardware\CRC16\CRC16.c</FilePath>
             </File>
+            <File>
+              <FileName>DissolvedOxygenMeter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\DissolvedOxygenMeter\DissolvedOxygenMeter.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

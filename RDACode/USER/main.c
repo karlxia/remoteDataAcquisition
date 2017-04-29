@@ -111,7 +111,7 @@ int main(void)
 		{	  		   				 
 			if(NRF24L01_TxPacket(tmp_buf)==TX_OK)
 			{
-				OLED_ShowString(2,6,"Send Data",16); 
+				OLED_ShowString(2,6,"NRF Send Data",16); 
 				for(t=0;t<32;t++)
 				{
 					if(t+mode>('~')){
@@ -125,7 +125,7 @@ int main(void)
 				tmp_buf[32]=0;//¼ÓÈë½áÊø·û	
 			}
 			else{
-				OLED_ShowString(2,6,"Send Fail",16); 
+				OLED_ShowString(2,6,"NRF Send Fail",16); 
 			}
 			BSP_LED_Toggle(LED1);
 			HAL_Delay(1500);
