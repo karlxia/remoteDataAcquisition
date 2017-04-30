@@ -1,6 +1,7 @@
 #include "main.h"
 #include "rs485.h"
 #include "PHMeter.h"
+#include "DissolvedOxygenMeter.h"
 #include "string.h"
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -138,6 +139,7 @@ int main(void)
   {	
 		RS485_Check();
 		PHMeterCheck();
+		DOMeterCheck();
 		BSP_PB_Check();		
 		PHMeterDisplay();
 		while(UserButton1Status == 0)

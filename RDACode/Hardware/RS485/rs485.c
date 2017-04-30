@@ -53,6 +53,7 @@ void RS485_Init(u32 bound)
 //len:发送的字节数(为了和本代码的接收匹配,这里建议不要超过64个字节)
 void RS485_Send_Data(u8 *buf,u8 len)
 {
+	RS485_TX_EN;
 	 /* The board sends the message and expects to receive it back */
   
   /*##-2- Start the transmission process #####################################*/  
@@ -69,7 +70,7 @@ void RS485_Send_Data(u8 *buf,u8 len)
   
   /* Reset transmission flag */
   UartReady = RESET;
-  
+  RS485_RX_EN;
 }
 //RS485查询接收到的数据
 //buf:接收缓存首地址

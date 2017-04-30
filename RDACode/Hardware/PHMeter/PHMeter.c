@@ -3,6 +3,8 @@
 uint8_t PHMeterReg=0x00;
 uint8_t PHMeterCMDBuf[PHMETER_CMDBUF_SIZE];
 uint8_t PHMeterDataBuf[PHMETER_DATABUF_SIZE];
+uint8_t PHMeteErrFC=0x00;
+uint8_t PHMeteErrCODE=0x00;
 uint16_t	PHData=0x0000;
 uint16_t	TData=0x0000;
 uint16_t	ORPData=0x0000;
@@ -15,6 +17,10 @@ void PHMeterErrorHandle(void){
 }
 
 void PHMeterTOHandle(void){
+	
+}
+
+void PHMeterCRCHandle(void){
 	
 }
 
@@ -31,9 +37,9 @@ void PHMeterDisplay(void){
 		OLED_ShowString(PHMETER_DISP_ORP_X,PHMETER_DISP_ORP_Y,"ORP",15);  
 	
 		OLED_ShowNum(PHMETER_DISP_CODE_X,PHMETER_DISP_CODE_Y,PHMeterCode,2,16);  
-		OLED_ShowNum(PHMETER_DISP_PHVALUE_X,PHMETER_DISP_PHVALUE_Y,PHMeterCode,4,15);
-		OLED_ShowNum(PHMETER_DISP_TVALUE_X,PHMETER_DISP_TVALUE_Y,PHMeterCode,4,15);
-		OLED_ShowNum(PHMETER_DISP_ORPVALUE_X,PHMETER_DISP_ORPVALUE_Y,PHMeterCode,4,15);
+		OLED_ShowNum(PHMETER_DISP_PHVALUE_X,PHMETER_DISP_PHVALUE_Y,PHData,4,15);
+		OLED_ShowNum(PHMETER_DISP_TVALUE_X,PHMETER_DISP_TVALUE_Y,TData,4,15);
+		OLED_ShowNum(PHMETER_DISP_ORPVALUE_X,PHMETER_DISP_ORPVALUE_Y,ORPData,4,15);
 	
 		OLED_ShowNum(PHMETER_DISP_PHTHRESHOLD_X,PHMETER_DISP_PHTHRESHOLD_Y,PHThreshold,4,15);
 		OLED_ShowNum(PHMETER_DISP_TTHRESHOLD_X,PHMETER_DISP_TTHRESHOLD_Y,TThreshold,4,15);
@@ -42,9 +48,12 @@ void PHMeterDisplay(void){
 }
 
 void PHMeterRequestData(void){
+	uint16_t CRC16DATA=0X0000;
 	PHMeterCMDBuf[PHMETER_ADDR_OFF]		=PHMeterAddr;
 	PHMeterCMDBuf[PHMETER_FC_OFF]			=PHMETER_FC;
-	PHMeterCMDBuf[PHMETER_CRCLEN_OFF]	=CRC16(PHMeterCMDBuf,PHMETER_CRCLEN_OFF);
+	CRC16DATA=CRC16(PHMeterCMDBuf,PHMETER_CRCLEN_OFF);
+	PHMeterCMDBuf[PHMETER_CRCLEN_OFF]	=CRC16DATA&0xff;
+	PHMeterCMDBuf[PHMETER_CRCLEN_OFF]	=CRC16DATA>>8;
 	RS485_Send_Data(PHMeterCMDBuf,PHMETER_CMDBUF_SIZE);
 }
 	 
@@ -57,8 +66,10 @@ void PHMeterRequestPH(void){
 			return ;
 		}
 	}
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_PH_OFFSET;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_PH_DATACNT;	
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_PH_OFFSET&0xff;
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_PH_OFFSET>>8;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF]=PHMETER_PH_DATACNT&0xff;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]=PHMETER_PH_DATACNT>>8;	
 	PHMeterReg|=PHMETER_PH_PEND;
 	PHMeterRequestData();
 }
@@ -72,8 +83,10 @@ void PHMeterRequestT(void){
 			return ;
 		}
 	}
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_T_OFFSET;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_T_DATACNT;	
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_T_OFFSET&0xff;
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_T_OFFSET>>8;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_T_DATACNT&0xff;	
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]	=PHMETER_T_DATACNT>>8;	
 	PHMeterReg|=PHMETER_T_PEND;
 	PHMeterRequestData();
 }
@@ -87,8 +100,10 @@ void PHMeterRequestPHT(void){
 			return ;
 		}
 	}
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_PHT_OFFSET;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_PHT_DATACNT;	
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_PHT_OFFSET&0xff;
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_PHT_OFFSET>>8;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_PHT_DATACNT&0xff;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]	=(PHMETER_PHT_DATACNT)>>8;	
 	PHMeterReg|=PHMETER_PHT_PEND;
 	PHMeterRequestData();
 }
@@ -102,8 +117,10 @@ void PHMeterRequestORP(void){
 			return ;
 		}
 	}
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_ORP_OFFSET;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_ORP_DATACNT;	
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_ORP_OFFSET&0xff;
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_ORP_OFFSET>>8;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_ORP_DATACNT&0xff;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]	=PHMETER_ORP_DATACNT>>8;	
 	PHMeterReg|=PHMETER_ORP_PEND;
 	PHMeterRequestData();
 }
@@ -117,14 +134,72 @@ void PHMeterRequestORPT(void){
 			return ;
 		}
 	}
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_TORP_OFFSET;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_TORP_DATACNT;	
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_TORP_OFFSET&0xff;
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_TORP_OFFSET>>8;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_TORP_DATACNT&0xff;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]	=(PHMETER_TORP_DATACNT)>>8;	
 	PHMeterReg|=PHMETER_ORPT_PEND;
 	PHMeterRequestData();
 }
 
-void PHMeterReceiveHandle(void){
+void PHMeterErrReceiveHandle(void){
 	uint8_t Temp=0x00;
+	uint16_t rCRC=0x0000;			//readCRC
+	uint16_t cCRC=0x0000;			//calculateCRC
+	Temp=PHMeterReg&(~PHMETER_RBUF_UPDATE);
+	rCRC=PHMeterDataBuf[PHMETER_ERRCRC_OFF+1]<<8|PHMeterDataBuf[PHMETER_ERRCRC_OFF];
+	cCRC=CRC16(PHMeterDataBuf,PHMETER_ERRCRC_OFF);
+	if(rCRC!=cCRC){
+		PHMeterCRCHandle();//CRCERR
+		return ;
+	}	
+	if(PHMeterDataBuf[PHMETER_ADDR_OFF]!=PHMeterAddr){
+		PHMeterErrorHandle();
+	}
+	PHMeteErrFC=PHMeterDataBuf[PHMETER_FC_OFF]&~0x80;
+	PHMeteErrCODE=PHMeterDataBuf[PHMETER_ERRCRC_OFF];
+	OLED_Clear();
+	OLED_ShowString(PHMETER_DISP_TITAL_X,PHMETER_DISP_TITAL_Y,"PHMeter",16);  //L1
+	OLED_ShowString(PHMETER_DISP_CODE_X,PHMETER_DISP_CODE_Y,"Error",16);  	//error	
+	OLED_ShowString(PHMETER_DISP_PH_X,PHMETER_DISP_PH_Y,"  ErrFC",15);  
+	OLED_ShowString(PHMETER_DISP_T_X,PHMETER_DISP_T_Y,"ErrCODE",15);  
+	OLED_ShowNum(PHMETER_DISP_PHVALUE_X,PHMETER_DISP_PHVALUE_Y,PHMeteErrFC,4,15);
+	OLED_ShowNum(PHMETER_DISP_TVALUE_X,PHMETER_DISP_TVALUE_Y,PHMeteErrCODE,4,15); 
+	switch (Temp){
+		case PHMETER_PH_PEND:
+			PHMeterReg&=(~PHMETER_RBUF_UPDATE);
+			PHMeterReg&=(~PHMETER_PH_PEND);
+			PHMeterRequestPH();
+			break;
+		case PHMETER_T_PEND:
+			PHMeterReg&=(~PHMETER_RBUF_UPDATE);
+			PHMeterReg&=(~PHMETER_T_PEND);
+			PHMeterRequestT();
+			break;
+		case PHMETER_PHT_PEND:
+			PHMeterReg&=(~PHMETER_RBUF_UPDATE);
+			PHMeterReg&=(~PHMETER_PH_PEND);
+			PHMeterReg&=(~PHMETER_T_PEND);
+			PHMeterRequestPHT();
+			break;
+		case PHMETER_ORP_PEND:
+			PHMeterReg&=(~PHMETER_RBUF_UPDATE);
+			PHMeterReg&=(~PHMETER_ORP_PEND);
+			PHMeterRequestORP();
+			break;
+		case PHMETER_ORPT_PEND:
+			PHMeterReg&=(~PHMETER_RBUF_UPDATE);
+			PHMeterReg&=(~PHMETER_ORP_PEND);
+			PHMeterReg&=(~PHMETER_T_PEND);
+			PHMeterRequestORPT();
+			break;
+		default:	;
+	}
+}
+
+void PHMeterDataReceiveHandle(void){
+	uint8_t Temp=0x00;
+	uint8_t CRCData=0x00;
 	Temp=PHMeterReg&(~PHMETER_RBUF_UPDATE);
 	if(PHMeterDataBuf[PHMETER_ADDR_OFF]!=PHMeterAddr){
 		PHMeterErrorHandle();
@@ -134,10 +209,11 @@ void PHMeterReceiveHandle(void){
 	}
 	switch (Temp){
 		case PHMETER_PH_PEND:
+			CRCData=PHMeterDataBuf[PHMETER_SCRCLEN_OFF]|PHMeterDataBuf[PHMETER_SCRCLEN_OFF+1]<<8;
 			if(PHMeterDataBuf[PHMETER_DATALEN_OFF]!=PHMETER_PH_DATALEN){
 				PHMeterErrorHandle();
 			}
-			if(PHMeterDataBuf[PHMETER_SCRCLEN_OFF]!=CRC16(PHMeterDataBuf,PHMETER_SCRCLEN_OFF)){
+			if(CRCData!=CRC16(PHMeterDataBuf,PHMETER_SCRCLEN_OFF)){
 				PHMeterErrorHandle();
 			}
 			PHData=PHMeterDataBuf[PHMETER_DATA_OFF]<<8|PHMeterDataBuf[PHMETER_DATA_OFF+1];
@@ -145,10 +221,11 @@ void PHMeterReceiveHandle(void){
 			PHMeterReg&=(~PHMETER_PH_PEND);
 			break;
 		case PHMETER_T_PEND:
+			CRCData=PHMeterDataBuf[PHMETER_SCRCLEN_OFF]|PHMeterDataBuf[PHMETER_SCRCLEN_OFF+1]<<8;
 			if(PHMeterDataBuf[PHMETER_DATALEN_OFF]!=PHMETER_T_DATALEN){
 				PHMeterErrorHandle();
 			}
-			if(PHMeterDataBuf[PHMETER_SCRCLEN_OFF]!=CRC16(PHMeterDataBuf,PHMETER_SCRCLEN_OFF)){
+			if(CRCData!=CRC16(PHMeterDataBuf,PHMETER_SCRCLEN_OFF)){
 				PHMeterErrorHandle();
 			}
 			TData=PHMeterDataBuf[PHMETER_DATA_OFF]<<8|PHMeterDataBuf[PHMETER_DATA_OFF+1];
@@ -156,10 +233,11 @@ void PHMeterReceiveHandle(void){
 			PHMeterReg&=(~PHMETER_T_PEND);
 			break;
 		case PHMETER_PHT_PEND:
+			CRCData=PHMeterDataBuf[PHMETER_DCRCLEN_OFF]|PHMeterDataBuf[PHMETER_DCRCLEN_OFF+1]<<8;
 			if(PHMeterDataBuf[PHMETER_DATALEN_OFF]!=PHMETER_PHT_DATALEN){
 				PHMeterErrorHandle();
 			}
-			if(PHMeterDataBuf[PHMETER_DCRCLEN_OFF]!=CRC16(PHMeterDataBuf,PHMETER_DCRCLEN_OFF)){
+			if(CRCData!=CRC16(PHMeterDataBuf,PHMETER_DCRCLEN_OFF)){
 				PHMeterErrorHandle();
 			}
 			PHData=PHMeterDataBuf[PHMETER_DATA_OFF]<<8|PHMeterDataBuf[PHMETER_DATA_OFF+1];
@@ -169,10 +247,11 @@ void PHMeterReceiveHandle(void){
 			PHMeterReg&=(~PHMETER_T_PEND);
 			break;
 		case PHMETER_ORP_PEND:
+			CRCData=PHMeterDataBuf[PHMETER_SCRCLEN_OFF]|PHMeterDataBuf[PHMETER_SCRCLEN_OFF+1]<<8;
 			if(PHMeterDataBuf[PHMETER_DATALEN_OFF]!=PHMETER_ORP_DATALEN){
 				PHMeterErrorHandle();
 			}
-			if(PHMeterDataBuf[PHMETER_SCRCLEN_OFF]!=CRC16(PHMeterDataBuf,PHMETER_SCRCLEN_OFF)){
+			if(CRCData!=CRC16(PHMeterDataBuf,PHMETER_SCRCLEN_OFF)){
 				PHMeterErrorHandle();
 			}
 			ORPData=PHMeterDataBuf[PHMETER_DATA_OFF]<<8|PHMeterDataBuf[PHMETER_DATA_OFF+1];
@@ -180,10 +259,11 @@ void PHMeterReceiveHandle(void){
 			PHMeterReg&=(~PHMETER_ORP_PEND);
 			break;
 		case PHMETER_ORPT_PEND:
+			CRCData=PHMeterDataBuf[PHMETER_DCRCLEN_OFF]|PHMeterDataBuf[PHMETER_DCRCLEN_OFF+1]<<8;
 			if(PHMeterDataBuf[PHMETER_DATALEN_OFF]!=PHMETER_TORP_DATALEN){
 				PHMeterErrorHandle();
 			}
-			if(PHMeterDataBuf[PHMETER_DCRCLEN_OFF]!=CRC16(PHMeterDataBuf,PHMETER_DCRCLEN_OFF)){
+			if(CRCData!=CRC16(PHMeterDataBuf,PHMETER_DCRCLEN_OFF)){
 				PHMeterErrorHandle();
 			}
 			TData=PHMeterDataBuf[PHMETER_DATA_OFF]<<8|PHMeterDataBuf[PHMETER_DATA_OFF+1];
@@ -196,12 +276,18 @@ void PHMeterReceiveHandle(void){
 	}
 }
 
+void PHMeterReceiveHandle(void){
+	if(PHMeterDataBuf[PHMETER_FC_OFF]&0x80){
+		PHMeterErrReceiveHandle();
+	}else{
+		PHMeterDataReceiveHandle();
+	}
+}
 void PHMeterCheck(void){
 	if(PHMeterReg&PHMETER_RBUF_UPDATE){
 		PHMeterReceiveHandle();
 		PHMeterReg&=~PHMETER_RBUF_UPDATE;
 	}
-	
 	
 }
 

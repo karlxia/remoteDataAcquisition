@@ -37,4 +37,5 @@
 ..\obj\main.o: ..\Hardware\RS485\rs485.h
 ..\obj\main.o: ..\Hardware\PHMeter\PHMeter.h
 ..\obj\main.o: ..\Hardware\CRC16\CRC16.h
+..\obj\main.o: ..\Hardware\DissolvedOxygenMeter\DissolvedOxygenMeter.h
 ..\obj\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

@@ -45,6 +45,7 @@
 #define RS485_2_REC                      0X01
 //模式控制
 #define RS485_TX_EN		PAout(1)	//485模式控制.0,接收;1,发送.
+#define RS485_RX_EN		PAout(0)	//485模式控制.0,接收;1,发送.
 //如果想串口中断接收，设置EN_USART2_RX为1，否则设置为0
 #define EN_USART2_RX 	1			//0,不接收;1,接收.
 													 

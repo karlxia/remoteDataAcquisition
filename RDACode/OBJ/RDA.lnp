@@ -26,6 +26,7 @@
 "..\obj\rs485.o"
 "..\obj\phmeter.o"
 "..\obj\crc16.o"
+"..\obj\dissolvedoxygenmeter.o"
 "..\obj\delay.o"
 "..\obj\sys.o"
 "..\obj\usart.o"

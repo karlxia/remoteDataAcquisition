@@ -79,7 +79,7 @@ I (..\HAL\Inc\stm32f0xx_hal_uart_ex.h)(0x580E19A2)
 I (..\Hardware\OLED\oled.h)(0x58FDE503)
 I (..\SYSTEM\sys\sys.h)(0x58DA6040)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (..\Hardware\RS485\rs485.h)(0x58FAB161)
+I (..\Hardware\RS485\rs485.h)(0x59057EF9)
 I (stm32f0xx_it.h)(0x580DD78E)
 F (.\stm32f0xx_hal_msp.c)(0x58F56F0E)(-c --cpu Cortex-M0 -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\SYS -I..\HAL\Inc -I..\Hardware\Led -I..\USER -I..\Hardware\OLED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\Hardware\RS485 -I..\Hardware\PHMeter -I..\Hardware\Turbidimeter -I..\Hardware\ConductivityMeter -I..\Hardware\DissolvedOxygenMeter -I..\Hardware\CRC16-I C:\Users\xiali\Desktop\毕设\remoteDataAcquisition\RDACode\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F030x8-o ..\obj\stm32f0xx_hal_msp.o --omf_browse ..\obj\stm32f0xx_hal_msp.crf --depend ..\obj\stm32f0xx_hal_msp.d)
 I (main.h)(0x58F8A25B)
@@ -117,9 +117,9 @@ I (..\HAL\Inc\stm32f0xx_hal_uart_ex.h)(0x580E19A2)
 I (..\Hardware\OLED\oled.h)(0x58FDE503)
 I (..\SYSTEM\sys\sys.h)(0x58DA6040)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (..\Hardware\RS485\rs485.h)(0x58FAB161)
+I (..\Hardware\RS485\rs485.h)(0x59057EF9)
 I (..\SYSTEM\usart\usart.h)(0x58F4C4B7)
-F (.\main.c)(0x5901E01F)(-c --cpu Cortex-M0 -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\SYS -I..\HAL\Inc -I..\Hardware\Led -I..\USER -I..\Hardware\OLED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\Hardware\RS485 -I..\Hardware\PHMeter -I..\Hardware\Turbidimeter -I..\Hardware\ConductivityMeter -I..\Hardware\DissolvedOxygenMeter -I..\Hardware\CRC16-I C:\Users\xiali\Desktop\毕设\remoteDataAcquisition\RDACode\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F030x8-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
+F (.\main.c)(0x59057D6E)(-c --cpu Cortex-M0 -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\SYS -I..\HAL\Inc -I..\Hardware\Led -I..\USER -I..\Hardware\OLED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\Hardware\RS485 -I..\Hardware\PHMeter -I..\Hardware\Turbidimeter -I..\Hardware\ConductivityMeter -I..\Hardware\DissolvedOxygenMeter -I..\Hardware\CRC16-I C:\Users\xiali\Desktop\毕设\remoteDataAcquisition\RDACode\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F030x8-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
 I (main.h)(0x58F8A25B)
 I (stm32f0xx_karlboard.h)(0x5900884A)
 I (..\HAL\Inc\stm32f0xx_hal.h)(0x580E19A2)
@@ -155,9 +155,10 @@ I (..\HAL\Inc\stm32f0xx_hal_uart_ex.h)(0x580E19A2)
 I (..\Hardware\OLED\oled.h)(0x58FDE503)
 I (..\SYSTEM\sys\sys.h)(0x58DA6040)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (..\Hardware\RS485\rs485.h)(0x58FAB161)
-I (..\Hardware\PHMeter\PHMeter.h)(0x58FE017B)
+I (..\Hardware\RS485\rs485.h)(0x59057EF9)
+I (..\Hardware\PHMeter\PHMeter.h)(0x59057E1A)
 I (..\Hardware\CRC16\CRC16.h)(0x58F89EE3)
+I (..\Hardware\DissolvedOxygenMeter\DissolvedOxygenMeter.h)(0x59057DF0)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5475F300)
 F (.\i2c.c)(0x58F4B86C)(-c --cpu Cortex-M0 -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\SYS -I..\HAL\Inc -I..\Hardware\Led -I..\USER -I..\Hardware\OLED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\Hardware\RS485 -I..\Hardware\PHMeter -I..\Hardware\Turbidimeter -I..\Hardware\ConductivityMeter -I..\Hardware\DissolvedOxygenMeter -I..\Hardware\CRC16-I C:\Users\xiali\Desktop\毕设\remoteDataAcquisition\RDACode\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F030x8-o ..\obj\i2c.o --omf_browse ..\obj\i2c.crf --depend ..\obj\i2c.d)
 I (i2c.h)(0x58F37CAB)
@@ -724,7 +725,7 @@ I (..\HAL\Inc\stm32f0xx_hal_uart.h)(0x58F56F0F)
 I (..\HAL\Inc\stm32f0xx_hal_uart_ex.h)(0x580E19A2)
 I (..\Hardware\OLED\oledfont.h)(0x544D152F)
 I (..\SYSTEM\delay\delay.h)(0x58F37848)
-F (..\Hardware\RS485\rs485.c)(0x58FAB161)(-c --cpu Cortex-M0 -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\SYS -I..\HAL\Inc -I..\Hardware\Led -I..\USER -I..\Hardware\OLED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\Hardware\RS485 -I..\Hardware\PHMeter -I..\Hardware\Turbidimeter -I..\Hardware\ConductivityMeter -I..\Hardware\DissolvedOxygenMeter -I..\Hardware\CRC16-I C:\Users\xiali\Desktop\毕设\remoteDataAcquisition\RDACode\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F030x8-o ..\obj\rs485.o --omf_browse ..\obj\rs485.crf --depend ..\obj\rs485.d)
+F (..\Hardware\RS485\rs485.c)(0x59057EF9)(-c --cpu Cortex-M0 -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\SYS -I..\HAL\Inc -I..\Hardware\Led -I..\USER -I..\Hardware\OLED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\Hardware\RS485 -I..\Hardware\PHMeter -I..\Hardware\Turbidimeter -I..\Hardware\ConductivityMeter -I..\Hardware\DissolvedOxygenMeter -I..\Hardware\CRC16-I C:\Users\xiali\Desktop\毕设\remoteDataAcquisition\RDACode\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F030x8-o ..\obj\rs485.o --omf_browse ..\obj\rs485.crf --depend ..\obj\rs485.d)
 I (..\SYSTEM\sys\sys.h)(0x58DA6040)
 I (..\SYS\stm32f0xx.h)(0x58F31B34)
 I (..\SYS\stm32f030x8.h)(0x581B57BB)
@@ -734,7 +735,7 @@ I (..\SYS\core_cmInstr.h)(0x580DCCAE)
 I (..\SYS\cmsis_armcc.h)(0x580DCCAE)
 I (..\SYS\core_cmFunc.h)(0x580DCCAE)
 I (..\SYS\system_stm32f0xx.h)(0x581B57BB)
-I (..\Hardware\RS485\rs485.h)(0x58FAB161)
+I (..\Hardware\RS485\rs485.h)(0x59057EF9)
 I (..\HAL\Inc\stm32f0xx_hal.h)(0x580E19A2)
 I (..\HAL\Inc\stm32f0xx_hal_conf.h)(0x58F2BE58)
 I (..\HAL\Inc\stm32f0xx_hal_rcc.h)(0x580E19A3)
@@ -760,13 +761,13 @@ I (..\HAL\Inc\stm32f0xx_hal_uart_ex.h)(0x580E19A2)
 I (..\USER\stm32f0xx_karlboard.h)(0x5900884A)
 I (..\SYSTEM\delay\delay.h)(0x58F37848)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5475F300)
-I (..\Hardware\PHMeter\PHMeter.h)(0x58FE017B)
+I (..\Hardware\PHMeter\PHMeter.h)(0x59057E1A)
 I (..\Hardware\OLED\oled.h)(0x58FDE503)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (..\Hardware\CRC16\CRC16.h)(0x58F89EE3)
 I (..\USER\main.h)(0x58F8A25B)
-F (..\Hardware\PHMeter\PHMeter.c)(0x58FE00FA)(-c --cpu Cortex-M0 -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\SYS -I..\HAL\Inc -I..\Hardware\Led -I..\USER -I..\Hardware\OLED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\Hardware\RS485 -I..\Hardware\PHMeter -I..\Hardware\Turbidimeter -I..\Hardware\ConductivityMeter -I..\Hardware\DissolvedOxygenMeter -I..\Hardware\CRC16-I C:\Users\xiali\Desktop\毕设\remoteDataAcquisition\RDACode\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F030x8-o ..\obj\phmeter.o --omf_browse ..\obj\phmeter.crf --depend ..\obj\phmeter.d)
-I (..\Hardware\PHMeter\PHMeter.h)(0x58FE017B)
+F (..\Hardware\PHMeter\PHMeter.c)(0x59057CF2)(-c --cpu Cortex-M0 -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\SYS -I..\HAL\Inc -I..\Hardware\Led -I..\USER -I..\Hardware\OLED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\Hardware\RS485 -I..\Hardware\PHMeter -I..\Hardware\Turbidimeter -I..\Hardware\ConductivityMeter -I..\Hardware\DissolvedOxygenMeter -I..\Hardware\CRC16-I C:\Users\xiali\Desktop\毕设\remoteDataAcquisition\RDACode\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F030x8-o ..\obj\phmeter.o --omf_browse ..\obj\phmeter.crf --depend ..\obj\phmeter.d)
+I (..\Hardware\PHMeter\PHMeter.h)(0x59057E1A)
 I (..\USER\stm32f0xx_karlboard.h)(0x5900884A)
 I (..\HAL\Inc\stm32f0xx_hal.h)(0x580E19A2)
 I (..\HAL\Inc\stm32f0xx_hal_conf.h)(0x58F2BE58)
@@ -802,7 +803,7 @@ I (..\Hardware\OLED\oled.h)(0x58FDE503)
 I (..\SYSTEM\sys\sys.h)(0x58DA6040)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (..\Hardware\CRC16\CRC16.h)(0x58F89EE3)
-I (..\Hardware\RS485\rs485.h)(0x58FAB161)
+I (..\Hardware\RS485\rs485.h)(0x59057EF9)
 I (..\USER\main.h)(0x58F8A25B)
 F (..\Hardware\CRC16\CRC16.c)(0x58F89EE3)(-c --cpu Cortex-M0 -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\SYS -I..\HAL\Inc -I..\Hardware\Led -I..\USER -I..\Hardware\OLED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\Hardware\RS485 -I..\Hardware\PHMeter -I..\Hardware\Turbidimeter -I..\Hardware\ConductivityMeter -I..\Hardware\DissolvedOxygenMeter -I..\Hardware\CRC16-I C:\Users\xiali\Desktop\毕设\remoteDataAcquisition\RDACode\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F030x8-o ..\obj\crc16.o --omf_browse ..\obj\crc16.crf --depend ..\obj\crc16.d)
 I (..\Hardware\CRC16\CRC16.h)(0x58F89EE3)
@@ -815,6 +816,45 @@ I (..\SYS\core_cmInstr.h)(0x580DCCAE)
 I (..\SYS\cmsis_armcc.h)(0x580DCCAE)
 I (..\SYS\core_cmFunc.h)(0x580DCCAE)
 I (..\SYS\system_stm32f0xx.h)(0x581B57BB)
+F (..\Hardware\DissolvedOxygenMeter\DissolvedOxygenMeter.c)(0x59057CF2)(-c --cpu Cortex-M0 -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\SYS -I..\HAL\Inc -I..\Hardware\Led -I..\USER -I..\Hardware\OLED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\Hardware\RS485 -I..\Hardware\PHMeter -I..\Hardware\Turbidimeter -I..\Hardware\ConductivityMeter -I..\Hardware\DissolvedOxygenMeter -I..\Hardware\CRC16-I C:\Users\xiali\Desktop\毕设\remoteDataAcquisition\RDACode\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F030x8-o ..\obj\dissolvedoxygenmeter.o --omf_browse ..\obj\dissolvedoxygenmeter.crf --depend ..\obj\dissolvedoxygenmeter.d)
+I (..\Hardware\DissolvedOxygenMeter\DissolvedOxygenMeter.h)(0x59057DF0)
+I (..\USER\stm32f0xx_karlboard.h)(0x5900884A)
+I (..\HAL\Inc\stm32f0xx_hal.h)(0x580E19A2)
+I (..\HAL\Inc\stm32f0xx_hal_conf.h)(0x58F2BE58)
+I (..\HAL\Inc\stm32f0xx_hal_rcc.h)(0x580E19A3)
+I (..\HAL\Inc\stm32f0xx_hal_def.h)(0x580E19A3)
+I (..\SYS\stm32f0xx.h)(0x58F31B34)
+I (..\SYS\stm32f030x8.h)(0x581B57BB)
+I (..\SYS\core_cm0.h)(0x580DCCAE)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5475F300)
+I (..\SYS\core_cmInstr.h)(0x580DCCAE)
+I (..\SYS\cmsis_armcc.h)(0x580DCCAE)
+I (..\SYS\core_cmFunc.h)(0x580DCCAE)
+I (..\SYS\system_stm32f0xx.h)(0x581B57BB)
+I (..\HAL\Inc\Legacy/stm32_hal_legacy.h)(0x580E19A2)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475F300)
+I (..\HAL\Inc\stm32f0xx_hal_rcc_ex.h)(0x580E19A3)
+I (..\HAL\Inc\stm32f0xx_hal_gpio.h)(0x580E19A3)
+I (..\HAL\Inc\stm32f0xx_hal_gpio_ex.h)(0x580E19A3)
+I (..\HAL\Inc\stm32f0xx_hal_dma.h)(0x580E19A3)
+I (..\HAL\Inc\stm32f0xx_hal_dma_ex.h)(0x580E19A3)
+I (..\HAL\Inc\stm32f0xx_hal_cortex.h)(0x580E19A3)
+I (..\HAL\Inc\stm32f0xx_hal_adc.h)(0x580E19A3)
+I (..\HAL\Inc\stm32f0xx_hal_adc_ex.h)(0x580E19A2)
+I (..\HAL\Inc\stm32f0xx_hal_flash.h)(0x580E19A3)
+I (..\HAL\Inc\stm32f0xx_hal_flash_ex.h)(0x580E19A2)
+I (..\HAL\Inc\stm32f0xx_hal_i2c.h)(0x580E19A3)
+I (..\HAL\Inc\stm32f0xx_hal_i2c_ex.h)(0x580F7B09)
+I (..\HAL\Inc\stm32f0xx_hal_spi.h)(0x580E19A3)
+I (..\HAL\Inc\stm32f0xx_hal_spi_ex.h)(0x580E19A3)
+I (..\HAL\Inc\stm32f0xx_hal_uart.h)(0x58F56F0F)
+I (..\HAL\Inc\stm32f0xx_hal_uart_ex.h)(0x580E19A2)
+I (..\Hardware\OLED\oled.h)(0x58FDE503)
+I (..\SYSTEM\sys\sys.h)(0x58DA6040)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
+I (..\Hardware\CRC16\CRC16.h)(0x58F89EE3)
+I (..\Hardware\RS485\rs485.h)(0x59057EF9)
+I (..\USER\main.h)(0x58F8A25B)
 F (..\SYSTEM\delay\delay.c)(0x58F38479)(-c --cpu Cortex-M0 -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\SYS -I..\HAL\Inc -I..\Hardware\Led -I..\USER -I..\Hardware\OLED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\Hardware\RS485 -I..\Hardware\PHMeter -I..\Hardware\Turbidimeter -I..\Hardware\ConductivityMeter -I..\Hardware\DissolvedOxygenMeter -I..\Hardware\CRC16-I C:\Users\xiali\Desktop\毕设\remoteDataAcquisition\RDACode\USER\RTE-I C:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\1.5.0-I C:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F030x8-o ..\obj\delay.o --omf_browse ..\obj\delay.crf --depend ..\obj\delay.d)
 I (..\SYSTEM\delay\delay.h)(0x58F37848)
 I (..\SYSTEM\sys\sys.h)(0x58DA6040)
@@ -895,4 +935,4 @@ I (..\USER\stm32f0xx_karlboard.h)(0x5900884A)
 I (..\USER\main.h)(0x58F8A25B)
 I (..\Hardware\OLED\oled.h)(0x58FDE503)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (..\Hardware\RS485\rs485.h)(0x58FAB161)
+I (..\Hardware\RS485\rs485.h)(0x59057EF9)
