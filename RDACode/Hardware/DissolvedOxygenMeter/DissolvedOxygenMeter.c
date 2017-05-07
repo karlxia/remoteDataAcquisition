@@ -15,15 +15,15 @@ uint16_t 	setHALM=0xffff;
 uint16_t 	setLALM=0x0000;
 uint16_t 	setLTC=0x00ff;
 void DOMeterErrorHandle(void){
-	
+	OLED_ShowString(DOMETER_DISP_TITAL_X,DOMETER_DISP_TITAL_Y,"DOERR",16);  //L1
 }
 
 void DOMeterCRCHandle(void){
-	
+	OLED_ShowString(DOMETER_DISP_TITAL_X,DOMETER_DISP_TITAL_Y,"DOCRC",16);  //L1
 }
 
 void DOMeterTOHandle(void){
-	
+	OLED_ShowString(DOMETER_DISP_TITAL_X,DOMETER_DISP_TITAL_Y,"DOTO",16);  //L1
 }
 
 
@@ -63,9 +63,10 @@ void DOMeterRequestData(void){
 	DOMeterCMDBuf[DOMETER_REGCNT_OFF+1]	=0X06;
 	
 	CRCDATA=CRC16(DOMeterCMDBuf,DOMETER_REQCRC_OFF);
-	DOMeterCMDBuf[DOMETER_REQCRC_OFF]	=CRCDATA&0XFF;
-	DOMeterCMDBuf[DOMETER_REQCRC_OFF+1]	=CRCDATA>>8;
-	RS485_Send_Data(DOMeterCMDBuf,DOMETER_CMDBUF_SIZE);
+	DOMeterCMDBuf[DOMETER_REQCRC_OFF+1]	=CRCDATA&0XFF;
+	DOMeterCMDBuf[DOMETER_REQCRC_OFF]	=CRCDATA>>8;
+	RS485_Send_Data(DOMeterCMDBuf,DOMETER_REQCRC_OFF+2);
+	DOMeterReg|=DOMETER_REQ_PEND;
 }
 	 
 void DOMeterWriteReg(uint16_t HALM,uint16_t LALM,uint16_t LTC){
@@ -88,6 +89,7 @@ void DOMeterWriteReg(uint16_t HALM,uint16_t LALM,uint16_t LTC){
 	DOMeterCMDBuf[DOMETER_DATANUM_OFF+7]	=CRCDATA&0XFF;
 	DOMeterCMDBuf[DOMETER_DATANUM_OFF+8]	=CRCDATA>>8;
 	RS485_Send_Data(DOMeterCMDBuf,DOMETER_CMDBUF_SIZE);
+	DOMeterReg|=DOMETER_WRITE_PEND;
 }
 
 void DOMeterErrReceiveHandle(void){
@@ -95,7 +97,7 @@ void DOMeterErrReceiveHandle(void){
 	uint16_t rCRC=0x0000;			//readCRC
 	uint16_t cCRC=0x0000;			//calculateCRC
 	Temp=DOMeterReg&(~DOMETER_RBUF_UPDATE);
-	rCRC=DOMeterDataBuf[DOMETER_ERRCRC_OFF+1]<<8|DOMeterDataBuf[DOMETER_ERRCRC_OFF];
+	rCRC=DOMeterDataBuf[DOMETER_ERRCRC_OFF]<<8|DOMeterDataBuf[DOMETER_ERRCRC_OFF+1];
 	cCRC=CRC16(DOMeterDataBuf,DOMETER_ERRCRC_OFF);
 	if(rCRC!=cCRC){
 		DOMeterCRCHandle();//CRCERR
@@ -142,7 +144,7 @@ void DOMeterDataReceiveHandle(void){
 	}
 	switch (Temp){
 		case DOMETER_REQ_PEND:		
-			rCRC=DOMeterDataBuf[DOMETER_DATACRC_OFF+1]<<8|DOMeterDataBuf[DOMETER_DATACRC_OFF];
+			rCRC=DOMeterDataBuf[DOMETER_DATACRC_OFF]<<8|DOMeterDataBuf[DOMETER_DATACRC_OFF+1];
 			cCRC=CRC16(DOMeterDataBuf,DOMETER_DATACRC_OFF);
 			if(rCRC!=cCRC){
 				DOMeterCRCHandle();//CRCERR
@@ -158,7 +160,7 @@ void DOMeterDataReceiveHandle(void){
 			DOMeterReg&=(~DOMETER_REQ_PEND);
 			break;
 		case DOMETER_WRITE_PEND:
-			rCRC=DOMeterDataBuf[6+1]<<8|DOMeterDataBuf[6];
+			rCRC=DOMeterDataBuf[6]<<8|DOMeterDataBuf[6+1];
 			cCRC=CRC16(DOMeterDataBuf,6);
 			if(rCRC!=cCRC){
 				DOMeterCRCHandle();//CRCERR

@@ -534,19 +534,19 @@ static void SPIx_Write(uint8_t Value)
   * @param  DataLength: number of bytes to write
   * @retval None
   */
-static void SPIx_ReadData(uint8_t *DataOut, uint16_t DataLength)
-{
-  HAL_StatusTypeDef status = HAL_OK;
+//static void SPIx_ReadData(uint8_t *DataOut, uint16_t DataLength)
+//{
+//  HAL_StatusTypeDef status = HAL_OK;
   
-  status = HAL_SPI_Receive(&hnucleo_Spi, DataOut, DataLength, SpixTimeout);
+//  status = HAL_SPI_Receive(&hnucleo_Spi, DataOut, DataLength, SpixTimeout);
   
   /* Check the communication status */
-  if(status != HAL_OK)
-  {
+//  if(status != HAL_OK)
+//  {
     /* Execute user timeout callback */
-    SPIx_Error();
-  }
-}
+//    SPIx_Error();
+//  }
+//}
 
 /**
   * @brief  SPI Read a Byte data to device
@@ -554,10 +554,10 @@ static void SPIx_ReadData(uint8_t *DataOut, uint16_t DataLength)
   * @param  DataLength: number of bytes to write
   * @retval None
   */
-static void SPIx_ReadByte(uint8_t *DataOut)
+/*static void SPIx_ReadByte(uint8_t *DataOut)
 {
   SPIx_ReadData(DataOut,1);
-}
+}*/
 /**
   * @brief  SPIx_FlushFifo
   * @retval None

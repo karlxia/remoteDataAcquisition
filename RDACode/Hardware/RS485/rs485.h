@@ -27,6 +27,26 @@
 #define RS485_2_RX_GPIO_PORT              GPIOA
 #define RS485_2_RX_AF                     GPIO_AF1_USART2
 
+/**
+  * @brief  RS485_1 Control Lines management
+  */
+#define RS485_1_RE_PIN                           GPIO_PIN_14
+#define RS485_1_RE_GPIO_PORT                     GPIOB
+#define RS485_1_RE_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOB_CLK_ENABLE()  
+#define RS485_1_RE_GPIO_CLK_DISABLE()          __HAL_RCC_GPIOB_CLK_DISABLE()
+#define RS485_1_RE_LOW()    HAL_GPIO_WritePin(RS485_1_RE_GPIO_PORT, RS485_1_RE_PIN, GPIO_PIN_RESET)
+#define RS485_1_RE_HIGH()   HAL_GPIO_WritePin(RS485_1_RE_GPIO_PORT, RS485_1_RE_PIN, GPIO_PIN_SET)
+
+/**
+  * @brief  RS485_2 Control Lines management
+  */
+#define RS485_2_RE_PIN                           GPIO_PIN_1
+#define RS485_2_RE_GPIO_PORT                     GPIOA
+#define RS485_2_RE_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOA_CLK_ENABLE()  
+#define RS485_2_RE_GPIO_CLK_DISABLE()          __HAL_RCC_GPIOA_CLK_DISABLE()
+#define RS485_2_RE_LOW()    HAL_GPIO_WritePin(RS485_2_RE_GPIO_PORT, RS485_2_RE_PIN, GPIO_PIN_RESET)
+#define RS485_2_RE_HIGH()   HAL_GPIO_WritePin(RS485_2_RE_GPIO_PORT, RS485_2_RE_PIN, GPIO_PIN_SET)
+
 /* Definition for USARTx's NVIC */
 #define RS485_2_IRQn                      USART2_IRQn
 #define RS485_2_IRQHandler                USART2_IRQHandler
@@ -43,9 +63,6 @@
 
 
 #define RS485_2_REC                      0X01
-//模式控制
-#define RS485_TX_EN		PAout(1)	//485模式控制.0,接收;1,发送.
-#define RS485_RX_EN		PAout(0)	//485模式控制.0,接收;1,发送.
 //如果想串口中断接收，设置EN_USART2_RX为1，否则设置为0
 #define EN_USART2_RX 	1			//0,不接收;1,接收.
 													 

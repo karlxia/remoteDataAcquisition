@@ -277,18 +277,6 @@ typedef enum
 #define NRF_CE_HIGH()   HAL_GPIO_WritePin(NRF_CE_GPIO_PORT, NRF_CE_PIN, GPIO_PIN_SET)
 
 /**
-  * @brief  RS485_1 Control Lines management
-  */
-#define RS485_1_RE_LOW()    HAL_GPIO_WritePin(RS485_1_RE_GPIO_PORT, RS485_1_RE_PIN, GPIO_PIN_RESET)
-#define RS485_1_RE_HIGH()   HAL_GPIO_WritePin(RS485_1_RE_GPIO_PORT, RS485_1_RE_PIN, GPIO_PIN_SET)
-
-/**
-  * @brief  RS485_2 Control Lines management
-  */
-#define RS485_2_RE_LOW()    HAL_GPIO_WritePin(RS485_2_RE_GPIO_PORT, RS485_2_RE_PIN, GPIO_PIN_RESET)
-#define RS485_2_RE_HIGH()   HAL_GPIO_WritePin(RS485_2_RE_GPIO_PORT, RS485_2_RE_PIN, GPIO_PIN_SET)
-
-/**
   * @brief  SD Control Lines management
   */
 #define SD_CS_LOW()       HAL_GPIO_WritePin(SD_CS_GPIO_PORT, SD_CS_PIN, GPIO_PIN_RESET)
@@ -371,22 +359,6 @@ typedef enum
 #define RX_PW_P4        0x15  //接收数据通道4有效数据宽度(1~32字节),设置为0则非法
 #define RX_PW_P5        0x16  //接收数据通道5有效数据宽度(1~32字节),设置为0则非法
 #define NRF_FIFO_STATUS 0x17  //FIFO状态寄存器;bit0,RX FIFO寄存器空标志;bit1,RX FIFO满标志;bit2,3,保留
- 
-/**
-  * @brief  RS485_1 Control Interface pins (shield D4)
-  */
-#define RS485_1_RE_PIN                            GPIO_PIN_0
-#define RS485_1_RE_GPIO_PORT                      GPIOA
-#define RS485_1_RE_GPIO_CLK_ENABLE()              __HAL_RCC_GPIOA_CLK_ENABLE()
-#define RS485_1_RE_GPIO_CLK_DISABLE()             __HAL_RCC_GPIOA_CLK_DISABLE()   
-
-/**
-  * @brief  RS485_2 Control Interface pins (shield D4)
-  */
-#define RS485_2_RE_PIN                            GPIO_PIN_1
-#define RS485_2_RE_GPIO_PORT                      GPIOA
-#define RS485_2_RE_GPIO_CLK_ENABLE()              __HAL_RCC_GPIOA_CLK_ENABLE()
-#define RS485_2_RE_GPIO_CLK_DISABLE()             __HAL_RCC_GPIOA_CLK_DISABLE()   
 
 /**
   * @brief  SD Control Interface pins (shield D4)

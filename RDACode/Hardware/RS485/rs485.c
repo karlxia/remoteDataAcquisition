@@ -3,6 +3,7 @@
 #include "delay.h"
 #include "string.h"
 #include "PHMeter.h"
+#include "DissolvedOxygenMeter.h"
 UART_HandleTypeDef UartHandle;
 __IO ITStatus UartReady = RESET;
 __IO uint32_t UserButtonStatus = 0;  /* set to 1 after User Button interrupt  */
@@ -21,11 +22,25 @@ u8 RS485_RX_BUF[64];  	//接收缓冲,最大64个字节.
 //接收到的数据长度
 u8 RS485_RX_CNT=0;   
 
-#endif										 
-//初始化IO 串口2
-//bound:波特率	  
+#endif	
+/**
+  * @brief Init RS485.
+  * @param  bound:BaudRate 
+  *   This parameter can be one of the following values:
+  * @arg 9600 115200 etc.
+  * @note None
+  * @retval None
+  */
+	
 void RS485_Init(u32 bound)
 {  
+	GPIO_InitTypeDef  gpioinitstruct;
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+	gpioinitstruct.Pin = RS485_2_RE_PIN;
+  gpioinitstruct.Mode = GPIO_MODE_OUTPUT_PP;
+  gpioinitstruct.Pull = GPIO_NOPULL;
+  gpioinitstruct.Speed = GPIO_SPEED_FREQ_HIGH; 
+  HAL_GPIO_Init(RS485_2_RE_GPIO_PORT, &gpioinitstruct);
 	
 	UartHandle.Instance        = USART2;
 
@@ -44,16 +59,20 @@ void RS485_Init(u32 bound)
   {
     Error_Handler();
   }
-  
+
 
 }
-
-//RS485发送len个字节.
-//buf:发送区首地址
-//len:发送的字节数(为了和本代码的接收匹配,这里建议不要超过64个字节)
+/**
+  * @brief Send data with RS485.
+	* @param  buf: first address of the data buffer to be sent
+						len: length of data to be sent. in Byte
+  * @arg 
+  * @note None
+  * @retval None
+  */
 void RS485_Send_Data(u8 *buf,u8 len)
 {
-	RS485_TX_EN;
+	RS485_2_RE_HIGH();
 	 /* The board sends the message and expects to receive it back */
   
   /*##-2- Start the transmission process #####################################*/  
@@ -70,11 +89,17 @@ void RS485_Send_Data(u8 *buf,u8 len)
   
   /* Reset transmission flag */
   UartReady = RESET;
-  RS485_RX_EN;
+  RS485_2_RE_LOW();
+	RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
 }
-//RS485查询接收到的数据
-//buf:接收缓存首地址
-//len:读到的数据长度
+/**
+  * @brief Get data received by RS485.
+	* @param  buf: first address of the data buffer used to store data received
+						len: length of data read. in Byte
+  * @arg 
+  * @note None
+  * @retval None
+  */
 void RS485_Receive_Data(u8 *buf,u8 len)
 {
 	/*##-4- Put UART peripheral in reception process ###########################*/  
@@ -87,6 +112,8 @@ void RS485_Receive_Data(u8 *buf,u8 len)
 void RS485_Check(void){
 	uint8_t ReceiveDataAddr=0x00;
 	if(RS485Reg){
+		memcpy(aRxBufferBackUp,aRxBuffer,RXBUFFERSIZE);
+		memcpy(aRxBuffer,allZero,RXBUFFERSIZE);
 		if(RS485Reg&RS485_2_REC){
 			ReceiveDataAddr=aRxBufferBackUp[0];
 			switch (ReceiveDataAddr){
@@ -94,14 +121,17 @@ void RS485_Check(void){
 					memcpy(PHMeterDataBuf,aRxBufferBackUp,PHMETER_DATABUF_SIZE);
 					PHMeterReg|=PHMETER_RBUF_UPDATE;
 					break;
-				
+				case DOMeterAddr:
+					memcpy(DOMeterDataBuf,aRxBufferBackUp,DOMETER_DATABUF_SIZE);
+					DOMeterReg|=DOMETER_RBUF_UPDATE;
+					break;
 				
 				default: ;
 			
 			}
 			memcpy(aRxBufferBackUp,allZero,RXBUFFERSIZE);
 		}
-	
+	RS485Reg&=~RS485_2_REC;
 	}
 
 
@@ -132,9 +162,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
 {
   /* Set transmission flag: trasfer complete*/
   UartReady = SET;	
-	memcpy(aRxBufferBackUp,aRxBuffer,RXBUFFERSIZE);
-	memcpy(aRxBuffer,allZero,RXBUFFERSIZE);
-  RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
+//  RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
 	RS485Reg|=RS485_2_REC;
 }
 

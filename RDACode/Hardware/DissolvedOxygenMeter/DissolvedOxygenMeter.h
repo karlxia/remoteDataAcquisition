@@ -8,7 +8,7 @@
 #include "rs485.h"
 #include "main.h"
 #define DOMETER_FC						0x03
-#define DOMeterAddr						0x00
+#define DOMeterAddr						0x03
 #define DOMeterTO						0x05
 //CMD BUF OFF
 //REQUIRE DATA CMD
@@ -125,4 +125,7 @@ extern uint8_t DOMeterDataBuf[];
 extern uint8_t DOMeterReg;
 void DOMeterCheck(void);
 void DOMeterDisplay(void);
+void DOMeterRequestData(void);
+void DOMeterWriteReg(uint16_t HALM,uint16_t LALM,uint16_t LTC);
+
 #endif /* __DISSOLVEDOXYGENMETER_H */

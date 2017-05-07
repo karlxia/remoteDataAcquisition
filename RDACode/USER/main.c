@@ -25,10 +25,6 @@ extern uint8_t aRxBufferBackUp[];
 
 int main(void)
 { 
-	uint8_t mode;		 
-	uint8_t tmp_buf[33];	
-	uint16_t t=0;
-	mode=0;		//NRF 0：RX	1：TX
 	/* This sample code shows how to use GPIO HAL API to toggle LED2 IOs
     in an infinite loop. */
 
@@ -47,111 +43,21 @@ int main(void)
   SystemClock_Config();
   RS485_Init(9600);
 	OLED_Init();			//初始化OLED 
-	NRF_IO_Init();
-	BSP_PB_Init(USER_BUTTON1, BUTTON_MODE_GPIO);
-	BSP_PB_Init(USER_BUTTON2, BUTTON_MODE_GPIO);
-  /* -1- Enable each GPIO Clock (to be able to program the configuration registers) */
-//  LED2_GPIO_CLK_ENABLE();
-  /* -2- Configure IOs in output push-pull mode to drive external LEDs */
-/*  GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull  = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-
-  GPIO_InitStruct.Pin = LED2_PIN;
-  HAL_GPIO_Init(LED2_GPIO_PORT, &GPIO_InitStruct);
-*/	
 	BSP_LED_Init(LED1);
 	BSP_LED_Init(LED2);
 	BSP_LED_Init(LED3);
-		//delay_init(168);	    	 //延时函数初始化	  
-	//	NVIC_Configuration(); 	 //设置NVIC中断分组2:2位抢占优先级，2位响应优先级 
-	//	I2C_Init(); 
-	while(NRF24L01_Check())
-	{
-		OLED_ShowString(0,6,"NRF ERR",16);
-	}
-		OLED_Clear(); 
-//	  OLED_On();
-/*		OLED_ShowCHinese(0,0,0);//中
-		OLED_ShowCHinese(18,0,1);//景
-		OLED_ShowCHinese(36,0,2);//园
-		OLED_ShowCHinese(54,0,3);//电
-		OLED_ShowCHinese(72,0,4);//子
-		OLED_ShowCHinese(90,0,5);//科
-		OLED_ShowCHinese(108,0,6);//技 
-		OLED_ShowString(0,6,"ASCII:",16);  
-		OLED_ShowString(63,6,"CODE:",16);  
-		OLED_ShowChar(48,6,t,16);//显示ASCII字符	   
-		OLED_ShowString(0,180,aTxBuffer,sizeof(aTxBuffer));
-		*/
-		PHMeterDisplay();
-	if(mode==0)//RX模式
-	{
-		NRF24L01_RX_Mode();		
-		while(1)
-		{	  		    		    				 
-			if(NRF24L01_RxPacket(tmp_buf)==0)//一旦接收到信息,则显示出来.
-			{
-				tmp_buf[32]=0;//加入字符串结束符				
-				OLED_ShowString(0,6,"NRF RX",16); 
-				OLED_ShowString(2,6,tmp_buf,16);    
-			}else HAL_Delay(1);;	   
-			t++;
-			if(t==1000)//大约1s钟改变一次状态
-			{
-				t=0;
-				BSP_LED_Toggle(LED1);
-			} 				    
-		};	
-	}else
-	{
-		NRF24L01_TX_Mode();
-		OLED_ShowString(0,6,"NRF TX",16); 
-		mode=' ';//从空格键开始  
-		while(1)
-		{	  		   				 
-			if(NRF24L01_TxPacket(tmp_buf)==TX_OK)
-			{
-				OLED_ShowString(2,6,"NRF Send Data",16); 
-				for(t=0;t<32;t++)
-				{
-					if(t+mode>('~')){
-						tmp_buf[t]=' ';
-					}else{
-						tmp_buf[t]=t+mode;					
-					}
-				}
-				mode++; 
-				if(mode>'~')mode=' '; 
-				tmp_buf[32]=0;//加入结束符	
-			}
-			else{
-				OLED_ShowString(2,6,"NRF Send Fail",16); 
-			}
-			BSP_LED_Toggle(LED1);
-			HAL_Delay(1500);
-		}
-	}
-		RS485_Send_Data(aTxBuffer,TXBUFFERSIZE);
-		RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
+	OLED_Clear(); 
   /* -3- Toggle IOs in an infinite loop */
+//	PHMeterRequestPH();
+//	DOMeterRequestData();
+	DOMeterWriteReg(3000,0500,0000);
   while (1)
   {	
 		RS485_Check();
 		PHMeterCheck();
-		DOMeterCheck();
-		BSP_PB_Check();		
-		PHMeterDisplay();
-		while(UserButton1Status == 0)
-		{
-			BSP_PB_Check();
-      /* Toggle LED2*/
-      BSP_LED_Toggle(LED1); 
-      HAL_Delay(100);
-		}
-		OLED_ShowString(6,3,aRxBuffer,16);	
-		OLED_ShowString(6,6,aRxBufferBackUp,16);
-		
+		DOMeterCheck();	
+//		PHMeterDisplay();
+		DOMeterDisplay();		
     HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
     /* Insert delay 100 ms */
     HAL_Delay(100);

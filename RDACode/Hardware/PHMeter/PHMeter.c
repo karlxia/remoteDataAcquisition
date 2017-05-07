@@ -13,14 +13,17 @@ uint16_t	TThreshold=0x0000;
 uint16_t	ORPThreshold=0x0000;
 uint16_t	PHMeterCode=0x0000;
 void PHMeterErrorHandle(void){
+		OLED_ShowString(PHMETER_DISP_TITAL_X,PHMETER_DISP_TITAL_Y,"PHERR",16); 
 	
 }
 
 void PHMeterTOHandle(void){
+		OLED_ShowString(PHMETER_DISP_TITAL_X,PHMETER_DISP_TITAL_Y,"PHTO",16); 
 	
 }
 
 void PHMeterCRCHandle(void){
+		OLED_ShowString(PHMETER_DISP_TITAL_X,PHMETER_DISP_TITAL_Y,"PHCRC",16); 
 	
 }
 
@@ -52,7 +55,7 @@ void PHMeterRequestData(void){
 	PHMeterCMDBuf[PHMETER_ADDR_OFF]		=PHMeterAddr;
 	PHMeterCMDBuf[PHMETER_FC_OFF]			=PHMETER_FC;
 	CRC16DATA=CRC16(PHMeterCMDBuf,PHMETER_CRCLEN_OFF);
-	PHMeterCMDBuf[PHMETER_CRCLEN_OFF]	=CRC16DATA&0xff;
+	PHMeterCMDBuf[PHMETER_CRCLEN_OFF+1]	=CRC16DATA&0xff;
 	PHMeterCMDBuf[PHMETER_CRCLEN_OFF]	=CRC16DATA>>8;
 	RS485_Send_Data(PHMeterCMDBuf,PHMETER_CMDBUF_SIZE);
 }
@@ -147,7 +150,7 @@ void PHMeterErrReceiveHandle(void){
 	uint16_t rCRC=0x0000;			//readCRC
 	uint16_t cCRC=0x0000;			//calculateCRC
 	Temp=PHMeterReg&(~PHMETER_RBUF_UPDATE);
-	rCRC=PHMeterDataBuf[PHMETER_ERRCRC_OFF+1]<<8|PHMeterDataBuf[PHMETER_ERRCRC_OFF];
+	rCRC=PHMeterDataBuf[PHMETER_ERRCRC_OFF]<<8|PHMeterDataBuf[PHMETER_ERRCRC_OFF+1];
 	cCRC=CRC16(PHMeterDataBuf,PHMETER_ERRCRC_OFF);
 	if(rCRC!=cCRC){
 		PHMeterCRCHandle();//CRCERR
@@ -199,7 +202,7 @@ void PHMeterErrReceiveHandle(void){
 
 void PHMeterDataReceiveHandle(void){
 	uint8_t Temp=0x00;
-	uint8_t CRCData=0x00;
+	uint16_t CRCData=0x0000;
 	Temp=PHMeterReg&(~PHMETER_RBUF_UPDATE);
 	if(PHMeterDataBuf[PHMETER_ADDR_OFF]!=PHMeterAddr){
 		PHMeterErrorHandle();
@@ -209,36 +212,36 @@ void PHMeterDataReceiveHandle(void){
 	}
 	switch (Temp){
 		case PHMETER_PH_PEND:
-			CRCData=PHMeterDataBuf[PHMETER_SCRCLEN_OFF]|PHMeterDataBuf[PHMETER_SCRCLEN_OFF+1]<<8;
+			CRCData=PHMeterDataBuf[PHMETER_SCRCLEN_OFF]<<8|PHMeterDataBuf[PHMETER_SCRCLEN_OFF+1];
 			if(PHMeterDataBuf[PHMETER_DATALEN_OFF]!=PHMETER_PH_DATALEN){
 				PHMeterErrorHandle();
 			}
 			if(CRCData!=CRC16(PHMeterDataBuf,PHMETER_SCRCLEN_OFF)){
-				PHMeterErrorHandle();
+				PHMeterCRCHandle();
 			}
 			PHData=PHMeterDataBuf[PHMETER_DATA_OFF]<<8|PHMeterDataBuf[PHMETER_DATA_OFF+1];
 			PHMeterReg&=(~PHMETER_RBUF_UPDATE);
 			PHMeterReg&=(~PHMETER_PH_PEND);
 			break;
 		case PHMETER_T_PEND:
-			CRCData=PHMeterDataBuf[PHMETER_SCRCLEN_OFF]|PHMeterDataBuf[PHMETER_SCRCLEN_OFF+1]<<8;
+			CRCData=PHMeterDataBuf[PHMETER_SCRCLEN_OFF]<<8|PHMeterDataBuf[PHMETER_SCRCLEN_OFF+1];
 			if(PHMeterDataBuf[PHMETER_DATALEN_OFF]!=PHMETER_T_DATALEN){
 				PHMeterErrorHandle();
 			}
 			if(CRCData!=CRC16(PHMeterDataBuf,PHMETER_SCRCLEN_OFF)){
-				PHMeterErrorHandle();
+				PHMeterCRCHandle();
 			}
 			TData=PHMeterDataBuf[PHMETER_DATA_OFF]<<8|PHMeterDataBuf[PHMETER_DATA_OFF+1];
 			PHMeterReg&=(~PHMETER_RBUF_UPDATE);
 			PHMeterReg&=(~PHMETER_T_PEND);
 			break;
 		case PHMETER_PHT_PEND:
-			CRCData=PHMeterDataBuf[PHMETER_DCRCLEN_OFF]|PHMeterDataBuf[PHMETER_DCRCLEN_OFF+1]<<8;
+			CRCData=PHMeterDataBuf[PHMETER_DCRCLEN_OFF]<<8|PHMeterDataBuf[PHMETER_DCRCLEN_OFF+1];
 			if(PHMeterDataBuf[PHMETER_DATALEN_OFF]!=PHMETER_PHT_DATALEN){
 				PHMeterErrorHandle();
 			}
 			if(CRCData!=CRC16(PHMeterDataBuf,PHMETER_DCRCLEN_OFF)){
-				PHMeterErrorHandle();
+				PHMeterCRCHandle();
 			}
 			PHData=PHMeterDataBuf[PHMETER_DATA_OFF]<<8|PHMeterDataBuf[PHMETER_DATA_OFF+1];
 			TData=PHMeterDataBuf[PHMETER_DATA_OFF+2]<<8|PHMeterDataBuf[PHMETER_DATA_OFF+3];
@@ -247,24 +250,24 @@ void PHMeterDataReceiveHandle(void){
 			PHMeterReg&=(~PHMETER_T_PEND);
 			break;
 		case PHMETER_ORP_PEND:
-			CRCData=PHMeterDataBuf[PHMETER_SCRCLEN_OFF]|PHMeterDataBuf[PHMETER_SCRCLEN_OFF+1]<<8;
+			CRCData=PHMeterDataBuf[PHMETER_SCRCLEN_OFF]<<8|PHMeterDataBuf[PHMETER_SCRCLEN_OFF+1];
 			if(PHMeterDataBuf[PHMETER_DATALEN_OFF]!=PHMETER_ORP_DATALEN){
 				PHMeterErrorHandle();
 			}
 			if(CRCData!=CRC16(PHMeterDataBuf,PHMETER_SCRCLEN_OFF)){
-				PHMeterErrorHandle();
+				PHMeterCRCHandle();
 			}
 			ORPData=PHMeterDataBuf[PHMETER_DATA_OFF]<<8|PHMeterDataBuf[PHMETER_DATA_OFF+1];
 			PHMeterReg&=(~PHMETER_RBUF_UPDATE);
 			PHMeterReg&=(~PHMETER_ORP_PEND);
 			break;
 		case PHMETER_ORPT_PEND:
-			CRCData=PHMeterDataBuf[PHMETER_DCRCLEN_OFF]|PHMeterDataBuf[PHMETER_DCRCLEN_OFF+1]<<8;
+			CRCData=PHMeterDataBuf[PHMETER_DCRCLEN_OFF]<<8|PHMeterDataBuf[PHMETER_DCRCLEN_OFF+1];
 			if(PHMeterDataBuf[PHMETER_DATALEN_OFF]!=PHMETER_TORP_DATALEN){
 				PHMeterErrorHandle();
 			}
 			if(CRCData!=CRC16(PHMeterDataBuf,PHMETER_DCRCLEN_OFF)){
-				PHMeterErrorHandle();
+				PHMeterCRCHandle();
 			}
 			TData=PHMeterDataBuf[PHMETER_DATA_OFF]<<8|PHMeterDataBuf[PHMETER_DATA_OFF+1];
 			ORPData=PHMeterDataBuf[PHMETER_DATA_OFF+2]<<8|PHMeterDataBuf[PHMETER_DATA_OFF+3];

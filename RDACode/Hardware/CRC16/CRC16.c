@@ -59,7 +59,7 @@ static int8_t auchCRCLo[] = {
 0x43, 0x83, 0x41, 0x81, 0x80, 0x40
 } ;
 
-uint8_t CRC16(uint8_t *puchMsg, uint16_t usDataLen)
+uint16_t CRC16(uint8_t *puchMsg, uint16_t usDataLen)
 {
 	uint8_t uchCRCHi = 0xFF ; /* 高CRC字节初始值 */
 	uint8_t uchCRCLo = 0xFF ; /* 低CRC字节初始值 */

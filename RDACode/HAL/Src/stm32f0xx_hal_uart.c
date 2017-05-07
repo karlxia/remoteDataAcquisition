@@ -2779,7 +2779,7 @@ HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart)
 
       return HAL_OK;
     }
-
+		HAL_UART_RxCpltCallback(huart);
     return HAL_OK;
   }
   else

@@ -115,4 +115,5 @@ extern uint8_t PHMeterDataBuf[];
 extern uint8_t PHMeterReg;
 void PHMeterCheck(void);
 void PHMeterDisplay(void);
+void PHMeterRequestPH(void);
 #endif /* __PHMETER_H */
