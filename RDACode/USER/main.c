@@ -50,7 +50,7 @@ int main(void)
   /* -3- Toggle IOs in an infinite loop */
 //	PHMeterRequestPH();
 //	DOMeterRequestData();
-	DOMeterWriteReg(3000,0500,0000);
+	DOMeterWriteReg(0030,0005,0000);
   while (1)
   {	
 		RS485_Check();

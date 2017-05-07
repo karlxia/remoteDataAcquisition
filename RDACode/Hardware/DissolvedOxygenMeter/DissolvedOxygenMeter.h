@@ -7,8 +7,9 @@
 #include "CRC16.h"
 #include "rs485.h"
 #include "main.h"
-#define DOMETER_FC						0x03
-#define DOMeterAddr						0x03
+#define DOMETER_REQ_FC			0x03
+#define DOMETER_WREG_FC			0x10
+#define DOMeterAddr					0x03
 #define DOMeterTO						0x05
 //CMD BUF OFF
 //REQUIRE DATA CMD
