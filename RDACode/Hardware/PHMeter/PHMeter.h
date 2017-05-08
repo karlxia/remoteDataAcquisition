@@ -116,4 +116,8 @@ extern uint8_t PHMeterReg;
 void PHMeterCheck(void);
 void PHMeterDisplay(void);
 void PHMeterRequestPH(void);
+void PHMeterRequestT(void);
+void PHMeterRequestPHT(void);
+void PHMeterRequestORP(void);
+void PHMeterRequestORPT(void);
 #endif /* __PHMETER_H */

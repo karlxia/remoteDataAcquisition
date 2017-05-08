@@ -55,92 +55,92 @@ void PHMeterRequestData(void){
 	PHMeterCMDBuf[PHMETER_ADDR_OFF]		=PHMeterAddr;
 	PHMeterCMDBuf[PHMETER_FC_OFF]			=PHMETER_FC;
 	CRC16DATA=CRC16(PHMeterCMDBuf,PHMETER_CRCLEN_OFF);
-	PHMeterCMDBuf[PHMETER_CRCLEN_OFF+1]	=CRC16DATA&0xff;
 	PHMeterCMDBuf[PHMETER_CRCLEN_OFF]	=CRC16DATA>>8;
+	PHMeterCMDBuf[PHMETER_CRCLEN_OFF+1]	=CRC16DATA&0xff;
 	RS485_Send_Data(PHMeterCMDBuf,PHMETER_CMDBUF_SIZE);
 }
 	 
 void PHMeterRequestPH(void){
-	uint8_t Temp=0x00;
+/*	uint8_t Temp=0x00;
 	while(PHMeterReg){
 		Temp++;
 		if(Temp>>PHMeterTO){
 			PHMeterTOHandle();
 			return ;
 		}
-	}
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_PH_OFFSET&0xff;
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_PH_OFFSET>>8;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF]=PHMETER_PH_DATACNT&0xff;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]=PHMETER_PH_DATACNT>>8;	
+	}*/
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_PH_OFFSET&0xff;
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_PH_OFFSET>>8;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]=PHMETER_PH_DATACNT&0xff;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF]=PHMETER_PH_DATACNT>>8;	
 	PHMeterReg|=PHMETER_PH_PEND;
 	PHMeterRequestData();
 }
 
 void PHMeterRequestT(void){
-	uint8_t Temp=0x00;
+/*	uint8_t Temp=0x00;
 	while(PHMeterReg){
 		Temp++;
 		if(Temp>>PHMeterTO){
 			PHMeterTOHandle();
 			return ;
 		}
-	}
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_T_OFFSET&0xff;
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_T_OFFSET>>8;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_T_DATACNT&0xff;	
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]	=PHMETER_T_DATACNT>>8;	
+	}*/
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_T_OFFSET&0xff;
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_T_OFFSET>>8;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]	=PHMETER_T_DATACNT&0xff;	
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_T_DATACNT>>8;	
 	PHMeterReg|=PHMETER_T_PEND;
 	PHMeterRequestData();
 }
  
 void PHMeterRequestPHT(void){
-	uint8_t Temp=0x00;
+/*	uint8_t Temp=0x00;
 	while(PHMeterReg){
 		Temp++;
 		if(Temp>>PHMeterTO){
 			PHMeterTOHandle();
 			return ;
 		}
-	}
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_PHT_OFFSET&0xff;
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_PHT_OFFSET>>8;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_PHT_DATACNT&0xff;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]	=(PHMETER_PHT_DATACNT)>>8;	
+	}*/
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_PHT_OFFSET&0xff;
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_PHT_OFFSET>>8;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]	=PHMETER_PHT_DATACNT&0xff;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=(PHMETER_PHT_DATACNT)>>8;	
 	PHMeterReg|=PHMETER_PHT_PEND;
 	PHMeterRequestData();
 }
  
 void PHMeterRequestORP(void){
-	uint8_t Temp=0x00;
+/*	uint8_t Temp=0x00;
 	while(PHMeterReg){
 		Temp++;
 		if(Temp>>PHMeterTO){
 			PHMeterTOHandle();
 			return ;
 		}
-	}
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_ORP_OFFSET&0xff;
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_ORP_OFFSET>>8;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_ORP_DATACNT&0xff;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]	=PHMETER_ORP_DATACNT>>8;	
+	}*/
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_ORP_OFFSET&0xff;
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_ORP_OFFSET>>8;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]	=PHMETER_ORP_DATACNT&0xff;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_ORP_DATACNT>>8;	
 	PHMeterReg|=PHMETER_ORP_PEND;
 	PHMeterRequestData();
 }
 
 void PHMeterRequestORPT(void){
-	uint8_t Temp=0x00;
+/*	uint8_t Temp=0x00;
 	while(PHMeterReg){
 		Temp++;
 		if(Temp>>PHMeterTO){
 			PHMeterTOHandle();
 			return ;
 		}
-	}
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_TORP_OFFSET&0xff;
-	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_TORP_OFFSET>>8;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=PHMETER_TORP_DATACNT&0xff;
-	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]	=(PHMETER_TORP_DATACNT)>>8;	
+	}*/
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF+1]	=PHMETER_TORP_OFFSET&0xff;
+	PHMeterCMDBuf[PHMETER_OFFSET_OFF]	=PHMETER_TORP_OFFSET>>8;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF+1]	=PHMETER_TORP_DATACNT&0xff;
+	PHMeterCMDBuf[PHMETER_DATACNT_OFF]	=(PHMETER_TORP_DATACNT)>>8;	
 	PHMeterReg|=PHMETER_ORPT_PEND;
 	PHMeterRequestData();
 }
@@ -198,6 +198,7 @@ void PHMeterErrReceiveHandle(void){
 			break;
 		default:	;
 	}
+	PHMeterReg=0x00;
 }
 
 void PHMeterDataReceiveHandle(void){
@@ -277,6 +278,7 @@ void PHMeterDataReceiveHandle(void){
 			break;
 		default:	;
 	}
+	PHMeterReg=0x00;
 }
 
 void PHMeterReceiveHandle(void){

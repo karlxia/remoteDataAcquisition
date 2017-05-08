@@ -25,6 +25,8 @@ extern uint8_t aRxBufferBackUp[];
 
 int main(void)
 { 
+	uint8_t roundCnt=0x00;
+	uint8_t cntPerRound=0xff;
 	/* This sample code shows how to use GPIO HAL API to toggle LED2 IOs
     in an infinite loop. */
 
@@ -48,19 +50,44 @@ int main(void)
 	BSP_LED_Init(LED3);
 	OLED_Clear(); 
   /* -3- Toggle IOs in an infinite loop */
-//	PHMeterRequestPH();
+	RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
+//	PHMeterRequestPHT();
+//	PHMeterRequestORPT();
 //	DOMeterRequestData();
-	DOMeterWriteReg(0030,0005,0000);
+//	DOMeterWriteReg(0030,0005,0000);
   while (1)
   {	
+		if(roundCnt%cntPerRound==0){
+				DOMeterRequestData();	
+//			PHMeterRequestPH();		
+			HAL_Delay(8000);
+		}else if(roundCnt%cntPerRound==10){
+			PHMeterRequestT();		
+			HAL_Delay(1000);
+		}else if(roundCnt%cntPerRound==20){
+			PHMeterRequestORP();		
+			HAL_Delay(1000);
+		}else if(roundCnt%cntPerRound==100){
+	//		DOMeterRequestData();	
+			PHMeterRequestPH();					
+			HAL_Delay(1000);
+		}
+		if(roundCnt%cntPerRound==0){
+			OLED_Clear();
+			PHMeterDisplay();
+		}else if(roundCnt%cntPerRound==50){
+			OLED_Clear();
+			DOMeterDisplay();
+		}
 		RS485_Check();
 		PHMeterCheck();
 		DOMeterCheck();	
 //		PHMeterDisplay();
-		DOMeterDisplay();		
+//		DOMeterDisplay();		
     HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
     /* Insert delay 100 ms */
     HAL_Delay(100);
+	roundCnt++;
   }
 }
 static void SystemClock_Config(void)

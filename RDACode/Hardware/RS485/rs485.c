@@ -72,25 +72,28 @@ void RS485_Init(u32 bound)
   */
 void RS485_Send_Data(u8 *buf,u8 len)
 {
+	//RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
 	RS485_2_RE_HIGH();
+//	HAL_Delay(1000);
 	 /* The board sends the message and expects to receive it back */
   
   /*##-2- Start the transmission process #####################################*/  
   /* While the UART in reception process, user can transmit data through 
      "aTxBuffer" buffer */
-  if(HAL_UART_Transmit_IT(&UartHandle, (uint8_t*)buf, len)!= HAL_OK)
+	if(HAL_UART_Transmit(&UartHandle,(uint8_t*)buf, len,1000) != HAL_OK)
+  //if(HAL_UART_Transmit_IT(&UartHandle, (uint8_t*)buf, len)!= HAL_OK)
   {
     Error_Handler();
   }
 	/*##-3- Wait for the end of the transfer ###################################*/   
-  while (UartReady != SET)
-  {
-  }
+//  while (UartReady != SET)
+//  {
+//  }
   
   /* Reset transmission flag */
   UartReady = RESET;
+//  RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
   RS485_2_RE_LOW();
-	RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
 }
 /**
   * @brief Get data received by RS485.
@@ -102,10 +105,15 @@ void RS485_Send_Data(u8 *buf,u8 len)
   */
 void RS485_Receive_Data(u8 *buf,u8 len)
 {
+//	uint8_t t=0x00;
 	/*##-4- Put UART peripheral in reception process ###########################*/  
-  if(HAL_UART_Receive_IT(&UartHandle, (uint8_t *)buf, len) != HAL_OK)
+  while(HAL_UART_Receive_IT(&UartHandle, (uint8_t *)buf, len) != HAL_OK)
   {
     Error_Handler();
+//		if(t>>7){
+//			UartHandle.RxState = HAL_UART_STATE_READY;
+//		}
+//		t++;
   }
 }
 
@@ -162,8 +170,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
 {
   /* Set transmission flag: trasfer complete*/
   UartReady = SET;	
-//  RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
 	RS485Reg|=RS485_2_REC;
+	RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
 }
 
 /**

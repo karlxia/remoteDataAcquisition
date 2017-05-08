@@ -205,6 +205,7 @@ HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart);
   * @}
   */
 
+extern uint8_t aRxBuffer[];
 /* Exported functions --------------------------------------------------------*/
 
 /** @defgroup UART_Exported_Functions UART Exported Functions
@@ -2764,7 +2765,7 @@ HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart)
       *huart->pRxBuffPtr++ = (uint8_t)(uhdata & (uint8_t)uhMask);
     }
 
-    if(--huart->RxXferCount == 0U||((*(huart->pRxBuffPtr-1)==0x0a)&&(*(huart->pRxBuffPtr-2)==0x0d)))
+    if(--huart->RxXferCount == 0U||((*(huart->pRxBuffPtr-1)==0x0a)&&(*(huart->pRxBuffPtr-2)==0x0d))||(aRxBuffer[2]+5==huart->RxXferSize-huart->RxXferCount))
     {
       /* Disable the UART Parity Error Interrupt and RXNE interrupt*/
       CLEAR_BIT(huart->Instance->CR1, (USART_CR1_RXNEIE | USART_CR1_PEIE));
@@ -2779,7 +2780,6 @@ HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart)
 
       return HAL_OK;
     }
-		HAL_UART_RxCpltCallback(huart);
     return HAL_OK;
   }
   else

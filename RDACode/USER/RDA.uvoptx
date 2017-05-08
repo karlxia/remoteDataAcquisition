@@ -171,16 +171,16 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>16</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134228994</Address>
+          <LineNumber>2790</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134230886</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>C:\Users\xiali\Desktop\姣曡\remoteDataAcquisition\RDACode\Hardware\PHMeter\PHMeter.c</Filename>
+          <Filename>C:\Users\xiali\Desktop\姣曡\remoteDataAcquisition\RDACode\HAL\Src\stm32f0xx_hal_uart.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -194,62 +194,47 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>USART2</ItemText>
+          <ItemText>CRC16DATA</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>aTxBuffer</ItemText>
+          <ItemText>uchCRCHi</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>aRxBuffer</ItemText>
+          <ItemText>uchCRCLo</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>DOMeterCMDBuf</ItemText>
+          <ItemText>HAL_UART_STATE_READY</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>aRxBufferBackUp</ItemText>
+          <ItemText>huart-&gt;RxState</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>CRCDATA</ItemText>
+          <ItemText>rxBufStart</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>uchCRCHi</ItemText>
+          <ItemText>huart-&gt;RxXferSize</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>uchCRCLo</ItemText>
+          <ItemText>huart-&gt;RxXferCount</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>PHMeterAddr</ItemText>
-        </Ww>
-        <Ww>
-          <count>10</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>DOMeterAddr</ItemText>
-        </Ww>
-        <Ww>
-          <count>11</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>aRxBufferBackUp</ItemText>
-        </Ww>
-        <Ww>
-          <count>12</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>DOMeterDataBuf</ItemText>
+          <ItemText>aRxBuffer</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
@@ -411,7 +396,7 @@
 
   <Group>
     <GroupName>HAL</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
