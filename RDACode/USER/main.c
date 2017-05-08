@@ -49,6 +49,7 @@ int main(void)
 	BSP_LED_Init(LED2);
 	BSP_LED_Init(LED3);
 	OLED_Clear(); 
+	DOMeterDisplay();
   /* -3- Toggle IOs in an infinite loop */
 	RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
 //	PHMeterRequestPHT();
@@ -58,8 +59,7 @@ int main(void)
   while (1)
   {	
 		if(roundCnt%cntPerRound==0){
-				DOMeterRequestData();	
-//			PHMeterRequestPH();		
+				DOMeterRequestData();			
 			HAL_Delay(8000);
 		}else if(roundCnt%cntPerRound==10){
 			PHMeterRequestT();		
@@ -68,22 +68,19 @@ int main(void)
 			PHMeterRequestORP();		
 			HAL_Delay(1000);
 		}else if(roundCnt%cntPerRound==100){
-	//		DOMeterRequestData();	
 			PHMeterRequestPH();					
 			HAL_Delay(1000);
 		}
-		if(roundCnt%cntPerRound==0){
+		if(roundCnt%100==0){
 			OLED_Clear();
 			PHMeterDisplay();
-		}else if(roundCnt%cntPerRound==50){
+		}else if(roundCnt%100==50){
 			OLED_Clear();
 			DOMeterDisplay();
 		}
 		RS485_Check();
 		PHMeterCheck();
 		DOMeterCheck();	
-//		PHMeterDisplay();
-//		DOMeterDisplay();		
     HAL_GPIO_TogglePin(LED2_GPIO_PORT, LED2_PIN);
     /* Insert delay 100 ms */
     HAL_Delay(100);
