@@ -16,13 +16,6 @@ uint8_t aRxBuffer[RXBUFFERSIZE];
 uint8_t allZero[TXBUFFERSIZE];
 uint8_t aRxBufferBackUp[RXBUFFERSIZE];
 uint8_t RS485Reg=0x00;
-#if EN_USART2_RX   		//如果使能了接收   	  
-//接收缓存区 	
-u8 RS485_RX_BUF[64];  	//接收缓冲,最大64个字节.
-//接收到的数据长度
-u8 RS485_RX_CNT=0;   
-
-#endif	
 /**
   * @brief Init RS485.
   * @param  bound:BaudRate 
@@ -40,10 +33,8 @@ void RS485_Init(u32 bound)
   gpioinitstruct.Mode = GPIO_MODE_OUTPUT_PP;
   gpioinitstruct.Pull = GPIO_NOPULL;
   gpioinitstruct.Speed = GPIO_SPEED_FREQ_HIGH; 
-  HAL_GPIO_Init(RS485_2_RE_GPIO_PORT, &gpioinitstruct);
-	
+  HAL_GPIO_Init(RS485_2_RE_GPIO_PORT, &gpioinitstruct);	
 	UartHandle.Instance        = USART2;
-
   UartHandle.Init.BaudRate   = bound;
   UartHandle.Init.WordLength = UART_WORDLENGTH_8B;
   UartHandle.Init.StopBits   = UART_STOPBITS_1;
@@ -59,8 +50,6 @@ void RS485_Init(u32 bound)
   {
     Error_Handler();
   }
-
-
 }
 /**
   * @brief Send data with RS485.
@@ -72,27 +61,20 @@ void RS485_Init(u32 bound)
   */
 void RS485_Send_Data(u8 *buf,u8 len)
 {
-	//RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
 	RS485_2_RE_HIGH();
-//	HAL_Delay(1000);
 	 /* The board sends the message and expects to receive it back */
   
   /*##-2- Start the transmission process #####################################*/  
   /* While the UART in reception process, user can transmit data through 
      "aTxBuffer" buffer */
 	if(HAL_UART_Transmit(&UartHandle,(uint8_t*)buf, len,1000) != HAL_OK)
-  //if(HAL_UART_Transmit_IT(&UartHandle, (uint8_t*)buf, len)!= HAL_OK)
   {
     Error_Handler();
   }
 	/*##-3- Wait for the end of the transfer ###################################*/   
-//  while (UartReady != SET)
-//  {
-//  }
-  
+
   /* Reset transmission flag */
   UartReady = RESET;
-//  RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
   RS485_2_RE_LOW();
 }
 /**
@@ -105,15 +87,10 @@ void RS485_Send_Data(u8 *buf,u8 len)
   */
 void RS485_Receive_Data(u8 *buf,u8 len)
 {
-//	uint8_t t=0x00;
 	/*##-4- Put UART peripheral in reception process ###########################*/  
   while(HAL_UART_Receive_IT(&UartHandle, (uint8_t *)buf, len) != HAL_OK)
   {
     Error_Handler();
-//		if(t>>7){
-//			UartHandle.RxState = HAL_UART_STATE_READY;
-//		}
-//		t++;
   }
 }
 
@@ -132,17 +109,13 @@ void RS485_Check(void){
 				case DOMeterAddr:
 					memcpy(DOMeterDataBuf,aRxBufferBackUp,DOMETER_DATABUF_SIZE);
 					DOMeterReg|=DOMETER_RBUF_UPDATE;
-					break;
-				
-				default: ;
-			
+					break;				
+				default: ;			
 			}
 			memcpy(aRxBufferBackUp,allZero,RXBUFFERSIZE);
 		}
 	RS485Reg&=~RS485_2_REC;
 	}
-
-
 }
 /**
   * @brief  Tx Transfer completed callback
@@ -155,8 +128,6 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *UartHandle)
 {
   /* Set transmission flag: trasfer complete*/
   UartReady = SET;
-	
-  
 }
 
 /**

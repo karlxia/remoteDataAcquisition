@@ -13,6 +13,8 @@
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
+void CMDSwitch(uint8_t roundCnt);
+void DisplaySwitch(uint8_t roundCnt);
 /* Private functions ---------------------------------------------------------*/
 
 /* Buffer used for transmission */
@@ -26,58 +28,21 @@ extern uint8_t aRxBufferBackUp[];
 int main(void)
 { 
 	uint8_t roundCnt=0x00;
-	uint8_t cntPerRound=0xff;
-	/* This sample code shows how to use GPIO HAL API to toggle LED2 IOs
-    in an infinite loop. */
-
-  /* STM32F0xx HAL library initialization:
-       - Configure the Flash prefetch
-       - Systick timer is configured by default as source of time base, but user 
-         can eventually implement his proper time base source (a general purpose 
-         timer for example or other time source), keeping in mind that Time base 
-         duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and 
-         handled in milliseconds basis.
-       - Low Level Initialization
-     */
   HAL_Init();
-
   /* Configure the system clock to 48 MHz */
   SystemClock_Config();
   RS485_Init(9600);
-	OLED_Init();			//≥ı ºªØOLED 
+	OLED_Init();	
 	BSP_LED_Init(LED1);
 	BSP_LED_Init(LED2);
 	BSP_LED_Init(LED3);
 	OLED_Clear(); 
 	DOMeterDisplay();
-  /* -3- Toggle IOs in an infinite loop */
 	RS485_Receive_Data(aRxBuffer,RXBUFFERSIZE);
-//	PHMeterRequestPHT();
-//	PHMeterRequestORPT();
-//	DOMeterRequestData();
-//	DOMeterWriteReg(0030,0005,0000);
   while (1)
   {	
-		if(roundCnt%cntPerRound==0){
-				DOMeterRequestData();			
-			HAL_Delay(8000);
-		}else if(roundCnt%cntPerRound==10){
-			PHMeterRequestT();		
-			HAL_Delay(1000);
-		}else if(roundCnt%cntPerRound==20){
-			PHMeterRequestORP();		
-			HAL_Delay(1000);
-		}else if(roundCnt%cntPerRound==100){
-			PHMeterRequestPH();					
-			HAL_Delay(1000);
-		}
-		if(roundCnt%100==0){
-			OLED_Clear();
-			PHMeterDisplay();
-		}else if(roundCnt%100==50){
-			OLED_Clear();
-			DOMeterDisplay();
-		}
+		CMDSwitch(roundCnt);
+		DisplaySwitch(roundCnt);
 		RS485_Check();
 		PHMeterCheck();
 		DOMeterCheck();	
@@ -126,6 +91,32 @@ static void Error_Handler(void)
   }
 }
 
+void CMDSwitch(uint8_t roundCnt){
+	uint8_t cntPerRound=0xff;
+	if(roundCnt%cntPerRound==0){
+				DOMeterRequestData();			
+			HAL_Delay(8000);
+		}else if(roundCnt%cntPerRound==10){
+			PHMeterRequestT();		
+			HAL_Delay(1000);
+		}else if(roundCnt%cntPerRound==20){
+			PHMeterRequestORP();		
+			HAL_Delay(1000);
+		}else if(roundCnt%cntPerRound==100){
+			PHMeterRequestPH();					
+			HAL_Delay(1000);
+		}
+}
+
+void DisplaySwitch(uint8_t roundCnt){
+	if(roundCnt%100==0){
+			OLED_Clear();
+			PHMeterDisplay();
+		}else if(roundCnt%100==50){
+			OLED_Clear();
+			DOMeterDisplay();
+		}
+}
 /**
   * @brief EXTI line detection callbacks
   * @param GPIO_Pin: Specifies the pins connected EXTI line
